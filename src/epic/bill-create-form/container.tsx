@@ -33,7 +33,11 @@ const paymentProviders = {
 const Container = (props: PropTypes) => {
   return (
     <Formik onSubmit={(values, {setSubmitting}) => {
-      props.submit()
+      // @ts-ignore
+      values.privateAccount = Number(values.privateAccount)
+      // @ts-ignore
+      values.paymentAmount = Number(values.paymentAmount)
+      props.submit(values)
       console.log(values)
       setSubmitting(false)
     }}

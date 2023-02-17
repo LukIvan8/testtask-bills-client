@@ -27,6 +27,19 @@ const formatDate = (timestamp: string) => {
   return timestamp;
 }
 
+const formatLabel = (initLabel:string) => {
+  switch (initLabel) {
+    case ("internet"):
+      return "Оплата інтернет послуг"
+    case ("commun"):
+      return "Оплата коммунальних послуг"
+    case ("education"):
+      return "Оплата освіти"
+    default:
+      return initLabel
+  }
+}
+
 const Home = () => {
     const {data, isLoading} = useQuery('bills', async () => {
       const data = await fetch('http://localhost:3000/bill/list')
@@ -53,7 +66,7 @@ const Home = () => {
               data.map((bill: BillData) => {
                 return (<Card key={bill.billId}>
                   <Stack alignItems="start" justifyContent="none">
-                    <TextElem size={9} text={bill.transactionType}/>
+                    <TextElem size={9} text={formatLabel(bill.transactionType)}/>
                   </Stack>
                   <Stack alignItems="end" justifyContent="space-between">
                     <TextElem color="secondary" size={7} text={formatDate(bill.creationTime)}/>

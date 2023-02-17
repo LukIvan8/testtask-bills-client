@@ -31,6 +31,7 @@ const Create = () => {
   const {mutate, status} = useMutation(createNewItem)
 
   const handleSubmit = async (newBill: BillData) => {
+    console.log("New Bill" + newBill)
     await mutate(newBill);
   };
 
