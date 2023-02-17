@@ -1,42 +1,44 @@
 import React, {ReactNode} from 'react';
-import {IonSelect} from "@ionic/react";
 import styled from "styled-components";
-import {useTranslation} from "react-i18next";
 import {TextElem} from "../text-elem";
 import selectIcon from "../../assets/svg/chevron-down.svg"
 import {Field} from "formik";
 
 interface PropTypes {
-  placeholder?: string
   label: string
   icon?: string
-  value?:string
   children?:ReactNode
-  handleChange:Function
+  name?:string
+  optionList:{ value: string, label: string }[]
+  handleChange?: Function
+  innerRef?:React.Ref<any>
 }
 
 
 const Component = (props: PropTypes) => {
-
-  const {t} = useTranslation()
   return (
         <div>
           <TextElem weight="bold" size={8} tid={props.label ? props.label : ""}/>
-          <Select onChange={props.handleChange} value={props.value} as={IonSelect} placeholder={props.placeholder ? t(props.placeholder) : ""}>
-            {props.children}
-          </Select>
+          <Field innerRef={props.innerRef} name={props.name} as={Select}>
+            <option value=""></option>
+            {props.optionList.map(option => {
+              return <option key={option.value} value={option.value}>{option.label}</option>;
+            })}
+          </Field>
         </div>
   );
 };
 
-const Select = styled(Field)`
+const Select = styled.select`
+  border: none;
   color: black;
   background-color: white;
   border-radius: 10px;
-  --padding-start: 10px;
-  --padding-top: 14px;
-  --padding-bottom: 14px;
+  padding-left: 10px;
+  padding-top: 14px;
+  padding-bottom: 14px;
   font-size: 16px;
+  width:100%;
 
   ::part(icon) {
     content: url(${selectIcon});
